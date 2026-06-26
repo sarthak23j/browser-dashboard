@@ -340,3 +340,16 @@
     transform: translateY(0) scale(1);
   }
 }
+
+@media (max-width: 480px) {
+  .bangs-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.5rem;
+  }
+  .bang-card {
+    padding: 0.5rem 0.6rem;
+  }
+  .modal-content {
+    padding: 1.5rem;
+  }
+}

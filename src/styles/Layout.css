@@ -70,13 +70,13 @@
 
 .right-themes {
   position: absolute;
-  right: 7rem;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem 0.5rem;
+  flex-direction: row;
+  gap: 1.5rem;
+  padding: 0.5rem;
 }
 
 .theme-btn {
@@ -113,4 +113,40 @@
 .theme-btn.theme-4 {
   background: linear-gradient(135deg, #2f3640 50%, #3b82f6 50%);
   /* slate grey-blue & blue */
+}
+
+@media (max-width: 768px) {
+  .layout-container {
+    padding: 1rem;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .layout-header {
+    padding-bottom: 0.5rem;
+    justify-content: center;
+  }
+
+  .layout-main {
+    flex-direction: column;
+    padding: 0;
+    justify-content: space-between;
+  }
+
+  .center-content-wrapper {
+    width: 100%;
+    margin-top: 7rem;
+    height: auto;
+    flex: 1;
+  }
+
+  .right-themes {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem 0 0.5rem 0;
+    width: 100%;
+  }
 }

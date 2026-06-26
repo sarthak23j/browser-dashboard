@@ -26,3 +26,10 @@
   font-weight: 400;
   color: var(--accent-purple);
 }
+
+@media (max-width: 768px) {
+  .datetime-section {
+    padding: 1rem;
+    text-align: center;
+  }
+}

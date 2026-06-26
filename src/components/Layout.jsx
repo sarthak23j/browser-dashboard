@@ -3,13 +3,25 @@ import Calendar from './Calendar';
 import Greeting from './Greeting';
 import '../styles/Layout.css';
 
+import { useEffect } from 'react';
+
 function Layout() {
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('dashboard-theme') || 'theme-1';
+    if (savedTheme === 'theme-1') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+  }, []);
+
   const changeTheme = (themeName) => {
     if (themeName === 'theme-1') {
       document.documentElement.removeAttribute('data-theme');
     } else {
       document.documentElement.setAttribute('data-theme', themeName);
     }
+    localStorage.setItem('dashboard-theme', themeName);
   };
 
   return (
