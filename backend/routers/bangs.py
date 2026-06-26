@@ -50,6 +50,14 @@ def update_bang(
     Partially update an existing bang by its alias.
     Only the fields provided in the request body are modified.
     """
+    if data.alias is not None:
+        existing = repo.get_by_alias(data.alias)
+        if existing and existing.alias != alias.lower():
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail=f"A bang with alias '{data.alias}' already exists.",
+            )
+
     updated = repo.update(alias, data)
     if updated is None:
         raise HTTPException(

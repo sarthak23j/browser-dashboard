@@ -52,6 +52,7 @@ function Bangs() {
     setError(null);
     try {
       const updated = await ApiService.updateBang(selectedBang.alias, {
+        alias: formData.alias,
         name: formData.name,
         searchurl: formData.searchurl,
         baseurl: formData.baseurl,
