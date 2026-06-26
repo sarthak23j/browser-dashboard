@@ -1,0 +1,28 @@
+/* Date-Time 3-liner Section */
+.datetime-section {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  font-variant-numeric: tabular-nums;
+  padding: 2rem 5rem;
+}
+
+.datetime-day {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.datetime-date {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.datetime-time {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--accent-purple);
+}
