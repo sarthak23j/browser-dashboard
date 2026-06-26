@@ -1,23 +1,16 @@
 import { useState, useEffect } from 'react';
 import '../styles/Home.css';
 import { Link } from 'react-router-dom';
-import initialBangs from '../assets/bangs.json';
+import { ApiService } from '../services/api';
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [bangs, setBangs] = useState([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('bangs');
-    if (saved) {
-      try {
-        setBangs(JSON.parse(saved));
-      } catch (e) {
-        setBangs(initialBangs);
-      }
-    } else {
-      setBangs(initialBangs);
-    }
+    ApiService.getBangs().then((data) => {
+      setBangs(data);
+    });
   }, []);
 
   const handleSearchSubmit = (e) => {
@@ -77,7 +70,7 @@ function Home() {
         {matchedBang && (
           <span className="bang-pill">
             <span className="bang-alias">{matchedBang.alias}</span>
-            <span className="bang-name">{matchedBang.name.toLowerCase()}</span>
+            <span className="bang-name">{matchedBang.name}</span>
           </span>
         )}
       </form>

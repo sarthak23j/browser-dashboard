@@ -10,4 +10,13 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     viteSingleFile()
   ],
+  server: {
+    proxy: {
+      // During `npm run dev`, forward /api/* requests to the FastAPI backend
+      '/api': {
+        target: `http://localhost:${process.env.VITE_BACKEND_PORT || process.env.PORT || 8000}`,
+        changeOrigin: true,
+      },
+    },
+  },
 })

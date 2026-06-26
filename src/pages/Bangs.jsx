@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import initialBangs from '../assets/bangs.json';
 import '../styles/Bangs.css';
+import { ApiService } from '../services/api';
 
 function Bangs() {
   const [bangs, setBangs] = useState([]);
   const [selectedBang, setSelectedBang] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     alias: '',
@@ -14,37 +16,27 @@ function Bangs() {
     baseurl: ''
   });
 
-  // Load initial data
+  // Load bangs from the API on mount
   useEffect(() => {
-    const saved = localStorage.getItem('bangs');
-    if (saved) {
-      try {
-        setBangs(JSON.parse(saved));
-      } catch (e) {
-        setBangs(initialBangs);
-      }
-    } else {
-      setBangs(initialBangs);
-      localStorage.setItem('bangs', JSON.stringify(initialBangs));
-    }
+    setIsLoading(true);
+    ApiService.getBangs()
+      .then((data) => setBangs(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setIsLoading(false));
   }, []);
-
-  // Save updates
-  const saveBangs = (newList) => {
-    setBangs(newList);
-    localStorage.setItem('bangs', JSON.stringify(newList));
-  };
 
   const handleCardClick = (bang) => {
     setSelectedBang(bang);
     setFormData({ ...bang });
     setIsEditing(false);
+    setError(null);
   };
 
   const handleCloseModal = () => {
     setSelectedBang(null);
     setIsCreating(false);
     setIsEditing(false);
+    setError(null);
   };
 
   const handleInputChange = (e) => {
@@ -52,35 +44,57 @@ function Bangs() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleEditSubmit = (e) => {
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.alias || !formData.searchurl || !formData.baseurl) return;
 
-    const newList = bangs.map((b) => (b.alias === selectedBang.alias ? formData : b));
-    saveBangs(newList);
-    setSelectedBang(formData);
-    setIsEditing(false);
-  };
-
-  const handleDelete = () => {
-    const newList = bangs.filter((b) => b.alias !== selectedBang.alias);
-    saveBangs(newList);
-    handleCloseModal();
-  };
-
-  const handleCreateSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.name || !formData.alias || !formData.searchurl || !formData.baseurl) return;
-
-    // Avoid duplicate aliases
-    if (bangs.some((b) => b.alias === formData.alias)) {
-      alert('A bang with this alias already exists!');
-      return;
+    setIsLoading(true);
+    setError(null);
+    try {
+      const updated = await ApiService.updateBang(selectedBang.alias, {
+        name: formData.name,
+        searchurl: formData.searchurl,
+        baseurl: formData.baseurl,
+      });
+      setBangs((prev) => prev.map((b) => (b.alias === selectedBang.alias ? updated : b)));
+      setSelectedBang(updated);
+      setIsEditing(false);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    const newList = [...bangs, formData];
-    saveBangs(newList);
-    handleCloseModal();
+  const handleDelete = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      await ApiService.deleteBang(selectedBang.alias);
+      setBangs((prev) => prev.filter((b) => b.alias !== selectedBang.alias));
+      handleCloseModal();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCreateSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.alias || !formData.searchurl || !formData.baseurl) return;
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const created = await ApiService.createBang(formData);
+      setBangs((prev) => [...prev, created].sort((a, b) => a.alias.localeCompare(b.alias)));
+      handleCloseModal();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const openCreateModal = () => {
@@ -90,6 +104,7 @@ function Bangs() {
       searchurl: '',
       baseurl: ''
     });
+    setError(null);
     setIsCreating(true);
   };
 
@@ -103,6 +118,10 @@ function Bangs() {
           </svg>
         </button>
       </div>
+
+      {isLoading && !selectedBang && !isCreating && (
+        <p className="loading-msg">Loading…</p>
+      )}
 
       <div className="bangs-grid">
         {bangs.map((bang) => (
@@ -123,6 +142,8 @@ function Bangs() {
               </svg>
             </button>
 
+            {error && <p className="modal-error">{error}</p>}
+
             {isCreating ? (
               <form onSubmit={handleCreateSubmit} className="bang-form">
                 <h3>Create New Bang</h3>
@@ -142,7 +163,9 @@ function Bangs() {
                   <label>Base URL</label>
                   <input type="url" name="baseurl" value={formData.baseurl} onChange={handleInputChange} placeholder="e.g. https://www.youtube.com" required />
                 </div>
-                <button type="submit" className="submit-btn">Create</button>
+                <button type="submit" className="submit-btn" disabled={isLoading}>
+                  {isLoading ? 'Creating…' : 'Create'}
+                </button>
               </form>
             ) : isEditing ? (
               <form onSubmit={handleEditSubmit} className="bang-form">
@@ -153,7 +176,7 @@ function Bangs() {
                 </div>
                 <div className="form-group">
                   <label>Alias</label>
-                  <input type="text" name="alias" value={formData.alias} onChange={handleInputChange} required />
+                  <input type="text" name="alias" value={formData.alias} disabled />
                 </div>
                 <div className="form-group">
                   <label>Search URL</label>
@@ -164,8 +187,10 @@ function Bangs() {
                   <input type="url" name="baseurl" value={formData.baseurl} onChange={handleInputChange} required />
                 </div>
                 <div className="modal-actions-container">
-                  <button type="button" className="delete-btn" onClick={handleDelete}>Delete</button>
-                  <button type="submit" className="submit-btn">Save Changes</button>
+                  <button type="button" className="delete-btn" onClick={handleDelete} disabled={isLoading}>Delete</button>
+                  <button type="submit" className="submit-btn" disabled={isLoading}>
+                    {isLoading ? 'Saving…' : 'Save Changes'}
+                  </button>
                 </div>
               </form>
             ) : (
@@ -186,7 +211,7 @@ function Bangs() {
                   </div>
                 </div>
                 <div className="modal-actions-container">
-                  <button className="delete-btn icon-btn" onClick={handleDelete} aria-label="Delete">
+                  <button className="delete-btn icon-btn" onClick={handleDelete} disabled={isLoading} aria-label="Delete">
                     <svg viewBox="0 0 24 24" className="action-icon" fill="currentColor">
                       <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
                     </svg>
