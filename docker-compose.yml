@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  browser-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: browser-dashboard
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - db_data:/app/data
+    environment:
+      - PORT=8000
+      - DATABASE_URL=sqlite:////app/data/dashboard.db
+
+volumes:
+  db_data:
+    driver: local

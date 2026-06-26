@@ -1,0 +1,12 @@
+.git
+node_modules
+dist
+backend/__pycache__
+backend/dashboard.db
+dashboard.db
+.env
+.env.example
+.agents
+.gemini
+README.md
+*.log

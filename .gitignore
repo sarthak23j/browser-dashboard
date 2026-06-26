@@ -25,3 +25,7 @@ dist-ssr
 
 dist/
 node_modules/
+backend/__pycache__
+.env
+.agents
+.gemini
