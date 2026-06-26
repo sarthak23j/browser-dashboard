@@ -176,7 +176,7 @@ function Bangs() {
                 </div>
                 <div className="form-group">
                   <label>Alias</label>
-                  <input type="text" name="alias" value={formData.alias} disabled />
+                  <input type="text" name="alias" value={formData.alias} onChange={handleInputChange} required />
                 </div>
                 <div className="form-group">
                   <label>Search URL</label>
