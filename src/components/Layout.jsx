@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Calendar from './Calendar';
 import Greeting from './Greeting';
+import PiMonitor from './PiMonitor';
 import '../styles/Layout.css';
 
 import { useEffect } from 'react';
@@ -44,6 +45,8 @@ function Layout() {
           <button className="theme-btn theme-4" title="Red Theme" onClick={() => changeTheme('theme-4')}></button>
         </div>
       </main>
+
+      <PiMonitor />
     </div>
   );
 }

@@ -36,7 +36,7 @@ from fastapi.responses import FileResponse
 
 from database.engine import engine, SessionLocal
 from database.base import Base
-from routers import bangs_router
+from routers import bangs_router, system_router
 from seed import seed_bangs
 
 # Resolve the dist/ directory relative to this file (backend/../dist)
@@ -68,6 +68,7 @@ app = FastAPI(
 
 # ── API routes ──────────────────────────────────────────────────────────────
 app.include_router(bangs_router)
+app.include_router(system_router)
 
 
 # ── Frontend static file serving ────────────────────────────────────────────

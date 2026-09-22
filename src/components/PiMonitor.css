@@ -1,0 +1,75 @@
+/* ── Pi Monitor Pill ───────────────────────────────────────────────────────── */
+.pi-monitor-pill {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+
+  padding: 0.35rem 1rem;
+  border-radius: var(--radius-full);
+
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+
+  /* Subtle entrance */
+  animation: pi-fade-in 0.4s ease both;
+}
+
+@keyframes pi-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* Error state — muted border pulse */
+.pi-monitor-pill.pi-monitor-error {
+  border-color: var(--text-muted);
+  opacity: 0.6;
+}
+
+/* Each label+value pair */
+.pi-monitor-segment {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.28em;
+}
+
+.pi-monitor-label {
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+
+.pi-monitor-value {
+  color: var(--accent-purple);
+  font-weight: 600;
+}
+
+/* Thin vertical rule between segments */
+.pi-monitor-divider {
+  display: inline-block;
+  width: 1px;
+  height: 0.75em;
+  background-color: var(--border-color);
+  margin: 0 0.65rem;
+  flex-shrink: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .pi-monitor-pill {
+    bottom: 4.5rem; /* sit above the theme dots on mobile */
+    right: 50%;
+    transform: translateX(50%);
+    font-size: 0.68rem;
+  }
+}
