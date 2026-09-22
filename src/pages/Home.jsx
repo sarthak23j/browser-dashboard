@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
 import '../styles/Home.css';
 import { Link } from 'react-router-dom';
-import { ApiService } from '../services/api';
+import { BangsStorage } from '../services/bangsStorage';
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [bangs, setBangs] = useState([]);
 
   useEffect(() => {
-    ApiService.getBangs().then((data) => {
-      setBangs(data);
-    });
+    setBangs(BangsStorage.getBangs());
   }, []);
 
   const handleSearchSubmit = (e) => {

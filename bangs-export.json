@@ -1,0 +1,26 @@
+[
+  {
+    "alias": "y",
+    "name": "Youtube",
+    "searchurl": "https://www.youtube.com/results?search_query=",
+    "baseurl": "https://www.youtube.com"
+  },
+  {
+    "alias": "g",
+    "name": "Github",
+    "searchurl": "https://github.com/search?q=",
+    "baseurl": "https://github.com"
+  },
+  {
+    "alias": "t",
+    "name": "Twitter",
+    "searchurl": "https://twitter.com/search?q=",
+    "baseurl": "https://twitter.com"
+  },
+  {
+    "alias": "am",
+    "name": "Amazon",
+    "searchurl": "https://www.amazon.in/s?k=",
+    "baseurl": "https://www.amazon.in"
+  }
+]
