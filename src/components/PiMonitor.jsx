@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import './PiMonitor.css';
+import { useState, useEffect } from "react";
+import "./PiMonitor.css";
 
-const POLL_INTERVAL_MS = 5000; // refresh every 5 seconds
+const POLL_INTERVAL_MS = 500; // refresh every 5 seconds
 
 function fmt(value, suffix) {
-  if (value === null || value === undefined) return '—';
+  if (value === null || value === undefined) return "—";
   return `${value}${suffix}`;
 }
 
@@ -17,8 +17,8 @@ function PiMonitor() {
 
     const fetchStats = async () => {
       try {
-        const res = await fetch('/api/system');
-        if (!res.ok) throw new Error('non-2xx');
+        const res = await fetch("/api/system");
+        if (!res.ok) throw new Error("non-2xx");
         const data = await res.json();
         if (!cancelled) {
           setStats(data);
@@ -37,12 +37,15 @@ function PiMonitor() {
     };
   }, []);
 
-  const cpu  = stats ? fmt(stats.cpu_percent,  '%')  : '…';
-  const mem  = stats ? fmt(stats.mem_percent,  '%')  : '…';
-  const temp = stats ? fmt(stats.cpu_temp_c,   '°C') : '…';
+  const cpu = stats ? fmt(stats.cpu_percent, "%") : "…";
+  const mem = stats ? fmt(stats.mem_percent, "%") : "…";
+  const temp = stats ? fmt(stats.cpu_temp_c, "°C") : "…";
 
   return (
-    <div className={`pi-monitor-pill${error ? ' pi-monitor-error' : ''}`} title="Raspberry Pi system stats">
+    <div
+      className={`pi-monitor-pill${error ? " pi-monitor-error" : ""}`}
+      title="Raspberry Pi system stats"
+    >
       <span className="pi-monitor-segment">
         <span className="pi-monitor-label">cpu</span>
         <span className="pi-monitor-value">{cpu}</span>
