@@ -4,7 +4,7 @@
   height: 100vh;
   width: 100%;
   padding: 2rem;
-  overflow: hidden;
+  overflow: clip; /* prevent page-level scrollbars without clipping nested overflow-y */
 }
 
 .layout-header {
@@ -34,7 +34,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
   padding: 2rem 0;
 
 }
@@ -49,23 +49,15 @@
   margin-top: 8rem;
 }
 
-/* Scrollable Outlet area for actual page content */
+/* Outlet area — panel manages its own scroll, so keep this visible */
 .outlet-scroll-container {
   flex: 1;
   width: 100%;
-  overflow-y: auto;
+  overflow: visible;
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /* Styling scrollbar for just the outlet content */
-  scrollbar-color: transparent;
-  scrollbar-width: none;
-}
-
-.outlet-scroll-container::-webkit-scrollbar {
-  width: 0px;
 }
 
 @media (max-width: 768px) {
