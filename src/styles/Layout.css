@@ -2,9 +2,10 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   width: 100%;
-  padding: 2rem;
-  overflow: visible;
+  padding: 1.5rem 2rem;
+  overflow: hidden;
 }
 
 .layout-header {
@@ -12,7 +13,7 @@
   justify-content: flex-end;
   align-items: flex-start;
   flex-shrink: 0;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .logo-section h1 {
@@ -26,17 +27,16 @@
   text-shadow: 0 0 15px var(--accent-purple-glow);
 }
 
-
-
 /* Centered Main Area */
 .layout-main {
   flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  overflow: visible;
-  padding: 2rem 0;
-
+  justify-content: flex-start;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
 }
 
 /* Content wrapper ensuring greeting is in a set place */
@@ -45,11 +45,13 @@
   flex-direction: column;
   align-items: center;
   width: min(1600px, 95%);
-  height: 80%;
-  margin-top: 8rem;
+  max-height: 100%;
+  margin-top: clamp(1.5rem, 5vh, 4rem);
+  flex: 1;
+  min-height: 0;
 }
 
-/* Outlet area — panel manages its own scroll, so keep this visible */
+/* Outlet area — panel manages its own scroll */
 .outlet-scroll-container {
   flex: 1;
   width: 100%;
@@ -58,6 +60,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 0;
 }
 
 @media (max-width: 768px) {
@@ -65,6 +68,7 @@
     padding: 1rem;
     height: 100vh;
     height: 100dvh;
+    overflow: hidden;
   }
 
   .layout-header {
@@ -75,14 +79,13 @@
   .layout-main {
     flex-direction: column;
     padding: 0;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 
   .center-content-wrapper {
     width: 100%;
-    margin-top: 7rem;
+    margin-top: 1.5rem;
     height: auto;
     flex: 1;
   }
-
 }
