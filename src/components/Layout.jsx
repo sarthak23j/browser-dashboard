@@ -2,28 +2,15 @@ import { Outlet } from 'react-router-dom';
 import Calendar from './Calendar';
 import Greeting from './Greeting';
 import PiMonitor from './PiMonitor';
+import { applyThemeSettings, getThemeSettings } from '../services/themeSettings';
 import '../styles/Layout.css';
 
 import { useEffect } from 'react';
 
 function Layout() {
   useEffect(() => {
-    const savedTheme = localStorage.getItem('dashboard-theme') || 'theme-1';
-    if (savedTheme === 'theme-1') {
-      document.documentElement.removeAttribute('data-theme');
-    } else {
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    }
+    applyThemeSettings(getThemeSettings());
   }, []);
-
-  const changeTheme = (themeName) => {
-    if (themeName === 'theme-1') {
-      document.documentElement.removeAttribute('data-theme');
-    } else {
-      document.documentElement.setAttribute('data-theme', themeName);
-    }
-    localStorage.setItem('dashboard-theme', themeName);
-  };
 
   return (
     <div className="layout-container">
@@ -37,12 +24,6 @@ function Layout() {
           <div className="outlet-scroll-container">
             <Outlet />
           </div>
-        </div>
-        <div className="right-themes">
-          <button className="theme-btn theme-1" title="Purple Theme" onClick={() => changeTheme('theme-1')}></button>
-          <button className="theme-btn theme-2" title="Blue Theme" onClick={() => changeTheme('theme-2')}></button>
-          <button className="theme-btn theme-3" title="Emerald Theme" onClick={() => changeTheme('theme-3')}></button>
-          <button className="theme-btn theme-4" title="Red Theme" onClick={() => changeTheme('theme-4')}></button>
         </div>
       </main>
 

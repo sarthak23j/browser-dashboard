@@ -1,11 +1,8 @@
 """
 Browser Dashboard — FastAPI application entry point.
 
-Startup sequence:
-  1. Create all SQLAlchemy tables (idempotent).
-  2. Seed default bangs if the DB is empty.
-  3. Mount the built frontend (../dist) as static files at "/".
-  4. Expose the REST API under /api/bangs.
+Serves system stats and the built frontend. User bang settings are stored in
+each browser's localStorage, so no database is required.
 
 Running (production):
   1. npm run build          (in the project root, once)
@@ -22,52 +19,30 @@ Port:
 
 import argparse
 import os
-from contextlib import asynccontextmanager
 from pathlib import Path
 from dotenv import load_dotenv
 
 import uvicorn
 
-# Load env variables from root folder first so database.engine and main.py share settings
+# Load optional environment variables from the project root.
 load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 
-from database.engine import engine, SessionLocal
-from database.base import Base
-from routers import bangs_router, system_router
-from seed import seed_bangs
+from routers import system_router
 
 # Resolve the dist/ directory relative to this file (backend/../dist)
 DIST_DIR = Path(__file__).parent.parent / "dist"
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Run startup tasks before the app begins serving requests."""
-    # Create tables if they don't exist yet
-    Base.metadata.create_all(bind=engine)
-
-    # Seed default data on first run
-    db = SessionLocal()
-    try:
-        seed_bangs(db)
-    finally:
-        db.close()
-
-    yield  # Application runs here
-
-
 app = FastAPI(
     title="Browser Dashboard API",
-    description="REST API for managing search bang shortcuts.",
+    description="System stats API for the browser dashboard.",
     version="1.0.0",
-    lifespan=lifespan,
 )
 
 # ── API routes ──────────────────────────────────────────────────────────────
-app.include_router(bangs_router)
 app.include_router(system_router)
 
 

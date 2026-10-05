@@ -1,0 +1,25 @@
+{
+  "morning": [
+    "Good morning, {name}. The day has loaded.",
+    "Rise and shine, {name}. No rush on the shine.",
+    "Morning, {name}. Your tabs missed you.",
+    "Coffee first, world domination later, {name}?"
+  ],
+  "afternoon": [
+    "Good afternoon, {name}. Still making it look easy?",
+    "Hey, {name}. The sun is doing its thing.",
+    "Afternoon check-in, {name}: hydrated?",
+    "Keep being quietly brilliant, {name}."
+  ],
+  "evening": [
+    "Still on the clock, {name}?",
+    "Evening, {name}. You have earned a softer pace.",
+    "The day is winding down, {name}. Are you?",
+    "Look at you, {name}, making it to evening."
+  ],
+  "night": [
+    "Burning the midnight oil, {name}?",
+    "It's late, {name}. The internet will still be here tomorrow.",
+    "Night owl hours, {name}?"
+  ]
+}

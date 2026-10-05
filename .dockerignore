@@ -2,6 +2,12 @@
 node_modules
 dist
 backend/__pycache__
+**/__pycache__
+*.py[cod]
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
 .env.example
 .agents
 .gemini

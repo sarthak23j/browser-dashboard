@@ -10,9 +10,14 @@ function Calendar() {
   }, []);
 
   // Formatted date values
-  const day = time.toLocaleDateString('en-US', { weekday: 'long' });
-  const dateMonth = time.toLocaleDateString('en-US', { day: 'numeric', month: 'long' });
-  const timeString = time.toTimeString().split(' ')[0]; // hh:mm:ss
+  const day = time.toLocaleDateString(undefined, { weekday: 'long' });
+  const dateMonth = time.toLocaleDateString(undefined, { day: 'numeric', month: 'long' });
+  const timeString = time.toLocaleTimeString(undefined, {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  });
 
   return (
     <div className="datetime-section">

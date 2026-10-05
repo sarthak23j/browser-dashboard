@@ -1,13 +1,24 @@
 import { useState, useEffect } from 'react';
 import '../styles/Bangs.css';
 import { BangsStorage } from '../services/bangsStorage';
+import { getUserName, setUserName } from '../services/userSettings';
+import {
+  ACCENT_PRESETS,
+  getThemeSettings,
+  saveThemeSettings,
+} from '../services/themeSettings';
+import ColorPicker from '../components/ColorPicker';
 
 function Bangs() {
   const [bangs, setBangs] = useState([]);
   const [selectedBang, setSelectedBang] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isEditingTheme, setIsEditingTheme] = useState(false);
   const [error, setError] = useState(null);
+  const [userName, setUserNameValue] = useState('user');
+  const [themeSettings, setThemeSettings] = useState(getThemeSettings);
   const [formData, setFormData] = useState({
     name: '',
     alias: '',
@@ -15,9 +26,9 @@ function Bangs() {
     baseurl: ''
   });
 
-  // Load bangs from localStorage on mount
   useEffect(() => {
     setBangs(BangsStorage.getBangs());
+    setUserNameValue(getUserName());
   }, []);
 
   const handleCardClick = (bang) => {
@@ -30,8 +41,32 @@ function Bangs() {
   const handleCloseModal = () => {
     setSelectedBang(null);
     setIsCreating(false);
+    setIsEditingName(false);
+    setIsEditingTheme(false);
     setIsEditing(false);
     setError(null);
+  };
+
+  const handleNameSubmit = (e) => {
+    e.preventDefault();
+    setError(null);
+    try {
+      setUserNameValue(setUserName(userName));
+      setIsEditingName(false);
+    } catch {
+      setError('Could not save your name in this browser.');
+    }
+  };
+
+  const updateThemeSettings = (updates) => {
+    const nextSettings = { ...themeSettings, ...updates };
+    try {
+      saveThemeSettings(nextSettings);
+      setThemeSettings(nextSettings);
+      setError(null);
+    } catch {
+      setError('Could not save theme settings in this browser.');
+    }
   };
 
   const handleInputChange = (e) => {
@@ -91,7 +126,7 @@ function Bangs() {
   };
 
   const handleExport = () => {
-    const json = BangsStorage.exportJson();
+    const json = JSON.stringify(bangs, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -130,8 +165,36 @@ function Bangs() {
   return (
     <div className="bangs-container">
       <div className="bangs-header">
-        <h2 className="bangs-title">My Bangs</h2>
+        <h2 className="bangs-title">Settings</h2>
         <div className="bangs-header-actions">
+          <button
+            className="export-btn"
+            onClick={() => {
+              setUserNameValue(getUserName());
+              setError(null);
+              setIsEditingName(true);
+            }}
+            aria-label="Edit your name"
+            title="Edit name"
+          >
+            <svg viewBox="0 0 24 24" className="export-icon" fill="currentColor">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+          </button>
+          <button
+            className="export-btn"
+            onClick={() => {
+              setThemeSettings(getThemeSettings());
+              setError(null);
+              setIsEditingTheme(true);
+            }}
+            aria-label="Customize theme"
+            title="Customize theme"
+          >
+            <svg viewBox="0 0 24 24" className="export-icon" fill="currentColor">
+              <path d="M19.14 12.94c.04-.3.06-.61.07-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.61l-1.92-3.32a.5.5 0 0 0-.59-.22l-2.39.96a7.2 7.2 0 0 0-1.62-.94l-.36-2.54a.5.5 0 0 0-.48-.41h-3.84a.5.5 0 0 0-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.5.5 0 0 0-.59.22L2.74 8.87a.5.5 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.5.5 0 0 0-.12.61l1.92 3.32a.5.5 0 0 0 .59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54a.5.5 0 0 0 .48.41h3.84a.5.5 0 0 0 .47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96a.5.5 0 0 0 .59-.22l1.92-3.32a.5.5 0 0 0-.12-.61zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2z" />
+            </svg>
+          </button>
           {/* Hidden file input for JSON import */}
           <input
             id="import-file-input"
@@ -163,6 +226,7 @@ function Bangs() {
         </div>
       </div>
 
+      <h3 className="settings-section-title">Search shortcuts</h3>
       <div className="bangs-grid">
         {bangs.map((bang) => (
           <div key={bang.alias} className="bang-card" onClick={() => handleCardClick(bang)}>
@@ -171,6 +235,88 @@ function Bangs() {
           </div>
         ))}
       </div>
+
+      {isEditingName && (
+        <div className="modal-backdrop" onClick={handleCloseModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close-btn" onClick={handleCloseModal} aria-label="Close name editor">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+              </svg>
+            </button>
+            {error && <p className="modal-error" role="alert">{error}</p>}
+            <form onSubmit={handleNameSubmit} className="bang-form">
+              <h3>Edit your name</h3>
+              <div className="form-group">
+                <label htmlFor="user-name">Name</label>
+                <input
+                  id="user-name"
+                  type="text"
+                  value={userName}
+                  onChange={(e) => setUserNameValue(e.target.value)}
+                  maxLength={40}
+                  autoFocus
+                  required
+                />
+              </div>
+              <button type="submit" className="submit-btn">Save name</button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isEditingTheme && (
+        <div className="modal-backdrop" onClick={handleCloseModal}>
+          <div className="modal-content theme-settings-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close-btn" onClick={handleCloseModal} aria-label="Close theme settings">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+              </svg>
+            </button>
+            <h3>Customize theme</h3>
+            <p className="theme-settings-hint">Changes are saved on this device as you make them.</p>
+            {error && <p className="modal-error" role="alert">{error}</p>}
+            <fieldset className="theme-setting-group">
+              <legend>Backdrop</legend>
+              <div className="backdrop-options">
+                {['dark', 'light'].map((backdrop) => (
+                  <button
+                    key={backdrop}
+                    type="button"
+                    className={`backdrop-option${themeSettings.backdrop === backdrop ? ' is-selected' : ''}`}
+                    aria-pressed={themeSettings.backdrop === backdrop}
+                    onClick={() => updateThemeSettings({ backdrop })}
+                  >
+                    <span className={`backdrop-preview backdrop-preview-${backdrop}`} />
+                    {backdrop === 'dark' ? 'Dark' : 'Light'}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+            <fieldset className="theme-setting-group">
+              <legend>Accent color</legend>
+              <div className="accent-presets">
+                {ACCENT_PRESETS.map((preset) => (
+                  <button
+                    key={preset.value}
+                    type="button"
+                    className={`accent-preset${themeSettings.accent.toLowerCase() === preset.value ? ' is-selected' : ''}`}
+                    style={{ '--preset-color': preset.value }}
+                    aria-label={`${preset.name} accent`}
+                    aria-pressed={themeSettings.accent.toLowerCase() === preset.value}
+                    title={preset.name}
+                    onClick={() => updateThemeSettings({ accent: preset.value })}
+                  />
+                ))}
+                <ColorPicker
+                  value={themeSettings.accent}
+                  onChange={(accent) => updateThemeSettings({ accent })}
+                />
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      )}
 
       {/* Details / Edit Modal */}
       {(selectedBang || isCreating) && (

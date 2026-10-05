@@ -6,7 +6,9 @@ A minimalistic, customizable search landing page for your browser, built with Re
 
 - **Quick Search Redirects ("Bangs")**: Prefix your search with a registered alias (e.g., `y cat videos`) to search directly on YouTube, or just enter the alias alone (e.g., `y`) to visit the site's home page.
 - **Custom Bang Editor**: Add, edit, or delete search redirects directly from the settings interface.
-- **Local Persistence**: Custom configurations are saved locally in the browser's `localStorage`.
+- **Per-device Configuration**: Custom bangs are stored in the browser's `localStorage`.
+- **Personalized Greeting**: Choose a name for time-of-day greetings; it is stored in that browser too.
+- **Import / Export**: Back up and restore bang configurations as JSON.
 - **Minimalist Design**: Clean search bar interface with dynamic visual feedback indicating matched search bangs.
 
 ## Getting Started
@@ -35,9 +37,36 @@ To bundle the application for production:
 npm run build
 ```
 
+### Docker and Cloudflare Tunnel
+
+The supplied Compose file binds the app to `127.0.0.1:1337` on the host. Run
+`cloudflared` on the same host and point the tunnel origin at
+`http://localhost:1337`. The app does not require a database or persistent
+container volume.
+
+Before publishing a tunnel hostname, configure a Cloudflare Access application
+and an allow policy for the intended users. Protect the whole hostname,
+including `/api/*` if you want to restrict access to the system monitor endpoint.
+Do not change the Compose port binding to a public interface
+unless access is separately restricted at the host firewall or private network.
+If `cloudflared` runs in another container, connect both containers to a private
+Docker network and route to the app service by name instead of exposing its port
+publicly.
+
+The clock uses each visitor's local time and browser locale. Themes are stored
+per browser, and bangs are stored per browser as well. Your shortcuts do not
+sync between devices or browsers. Import and export JSON to move shortcuts
+between devices. Your greeting name is also stored per browser. The app itself
+keeps no user database.
+
+The settings screen is available at `/settings`. It includes bang management
+and a name editor. The name defaults to `user`, is saved in browser storage,
+and is inserted into one of the 15 greeting templates in
+`src/data/greetings.json`, selected by the visitor's local time of day.
+
 ## Structure
 
 - `src/pages/Home.jsx`: Main search landing page with search redirection logic.
-- `src/pages/Bangs.jsx`: Settings interface to manage custom bang actions.
-- `src/assets/bangs.json`: Default search presets (Google, DuckDuckGo, YouTube, GitHub, Wikipedia, etc.).
-
+- `src/pages/Bangs.jsx`: Settings interface for bang actions and the greeting name.
+- `src/services/bangsStorage.js`: Default search presets and browser-local storage.
+- `src/data/greetings.json`: Time-of-day greeting templates.

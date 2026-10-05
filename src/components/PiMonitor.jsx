@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./PiMonitor.css";
 
-const POLL_INTERVAL_MS = 1000; // refresh every 5 seconds
+const POLL_INTERVAL_MS = 5000;
 
 function fmt(value, suffix) {
   if (value === null || value === undefined) return "—";
