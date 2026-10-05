@@ -8,28 +8,70 @@ const STORAGE_KEY = 'dashboard_bangs';
 
 export const DEFAULT_BANGS = [
   {
-    alias: 'y',
-    name: 'Youtube',
-    searchurl: 'https://www.youtube.com/results?search_query=',
-    baseurl: 'https://www.youtube.com',
+    name: 'Amazon',
+    alias: 'a',
+    searchurl: 'https://www.amazon.in/s?k=',
+    baseurl: 'https://www.amazon.in/',
   },
   {
-    alias: 'g',
+    name: 'ChatGPT',
+    alias: 'ch',
+    searchurl: 'https://chatgpt.com/',
+    baseurl: 'https://chatgpt.com/',
+  },
+  {
+    name: 'Claude',
+    alias: 'cl',
+    searchurl: 'https://claude.ai/new',
+    baseurl: 'https://claude.ai/new',
+  },
+  {
+    name: 'F1TV',
+    alias: 'f1',
+    searchurl: 'https://f1tv.formula1.com/',
+    baseurl: 'https://f1tv.formula1.com/',
+  },
+  {
+    name: 'FitGirl',
+    alias: 'fg',
+    searchurl: 'https://fitgirl-repacks.site/?s=s',
+    baseurl: 'https://fitgirl-repacks.site',
+  },
+  {
+    alias: 'gh',
     name: 'Github',
     searchurl: 'https://github.com/search?q=',
     baseurl: 'https://github.com',
   },
   {
+    name: 'Gmail',
+    alias: 'm',
+    searchurl: 'https://mail.google.com/mail/u/0/#search/',
+    baseurl: 'https://mail.google.com/mail/u/0',
+  },
+  {
+    name: 'Reddit',
+    alias: 'r',
+    searchurl: 'https://www.reddit.com/search/?q=',
+    baseurl: 'https://www.reddit.com/',
+  },
+  {
+    name: 'Twitch',
     alias: 't',
+    searchurl: 'https://www.twitch.tv/search?term=s',
+    baseurl: 'https://www.twitch.tv',
+  },
+  {
+    alias: 'tw',
     name: 'Twitter',
     searchurl: 'https://twitter.com/search?q=',
     baseurl: 'https://twitter.com',
   },
   {
-    alias: 'am',
-    name: 'Amazon',
-    searchurl: 'https://www.amazon.in/s?k=',
-    baseurl: 'https://www.amazon.in',
+    alias: 'y',
+    name: 'Youtube',
+    searchurl: 'https://www.youtube.com/results?search_query=',
+    baseurl: 'https://www.youtube.com',
   },
 ];
 

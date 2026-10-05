@@ -3,23 +3,68 @@
     "Good morning, {name}. The day has loaded.",
     "Rise and shine, {name}. No rush on the shine.",
     "Morning, {name}. Your tabs missed you.",
-    "Coffee first, world domination later, {name}?"
+    "Coffee first, world domination later, {name}?",
+    "A fresh day, {name}. Let's see what happens.",
+    "Morning, {name}. The to-do list can wait one sip.",
+    "Hey, {name}. Look at you, up and operational.",
+    "The sun is up, {name}. That's a decent start.",
+    "Good morning, {name}. Be kind to your future self.",
+    "New day, same excellent you, {name}.",
+    "Morning, {name}. The first win: you showed up.",
+    "Hello, {name}. Your day is a blank page, mostly.",
+    "Up for a little progress, {name}?",
+    "Morning, {name}. May your coffee be strong and your tabs few.",
+    "Well, hello there, {name}. Ready when you are."
   ],
   "afternoon": [
     "Good afternoon, {name}. Still making it look easy?",
     "Hey, {name}. The sun is doing its thing.",
     "Afternoon check-in, {name}: hydrated?",
-    "Keep being quietly brilliant, {name}."
+    "Keep being quietly brilliant, {name}.",
+    "Look who made it to the middle of the day, {name}.",
+    "Afternoon, {name}. One thing at a time is still a plan.",
+    "Hey, {name}. Remember to unclench your jaw.",
+    "The day is halfway-ish, {name}. You're doing fine.",
+    "Afternoon, {name}. Take the tiny win.",
+    "Still on the quest, {name}? Impressive.",
+    "Hello again, {name}. Have you had a proper break?",
+    "Afternoon, {name}. Your future self says thanks.",
+    "Keep going, {name}. Even the small steps count.",
+    "Checking in, {name}: still more clever than your inbox?",
+    "Good afternoon, {name}. You have got this part."
   ],
   "evening": [
     "Still on the clock, {name}?",
     "Evening, {name}. You have earned a softer pace.",
     "The day is winding down, {name}. Are you?",
-    "Look at you, {name}, making it to evening."
+    "Look at you, {name}, making it to evening.",
+    "Evening, {name}. The rest can wait until tomorrow.",
+    "Hey, {name}. The sky is doing the most again.",
+    "You made it through today, {name}. That counts.",
+    "Evening, {name}. Time to lower the number of tabs.",
+    "The day is off duty soon, {name}. You can be too.",
+    "Good evening, {name}. Take a breath; you earned it.",
+    "Still glowing, {name}, or is that just the screen?",
+    "Evening, {name}. A little rest is productive too.",
+    "The busy bit is over, {name}. Hopefully.",
+    "Hey, {name}. Consider this your permission to slow down.",
+    "Evening already, {name}? Time has no chill."
   ],
   "night": [
     "Burning the midnight oil, {name}?",
     "It's late, {name}. The internet will still be here tomorrow.",
-    "Night owl hours, {name}?"
+    "Night owl hours, {name}?",
+    "Hey, {name}. Even your tabs could use some sleep.",
+    "The moon is up, {name}. Maybe you should be too. In bed.",
+    "Late-night thought, {name}: rest is allowed.",
+    "Still awake, {name}? The pillow has been expecting you.",
+    "Night, {name}. Tomorrow-you can take it from here.",
+    "It's quiet out there, {name}. Let your brain be quiet too.",
+    "One last thing, {name}? Famous last words.",
+    "The stars are clocked in, {name}. You can clock out.",
+    "Night shift, {name}? Remember to take a break.",
+    "Hey, {name}. Your bed sent a very polite reminder.",
+    "It's getting late, {name}. Save that genius for morning.",
+    "Good night-ish, {name}. Whenever you're ready."
   ]
 }

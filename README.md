@@ -49,11 +49,10 @@ does not require a database or persistent container volume.
 
 Before publishing a tunnel hostname, configure a Cloudflare Access application
 and an allow policy for the intended users. Protect the whole hostname,
-including `/api/*` if you want to restrict access to the system monitor endpoint.
-The published `1337` port is reachable on host interfaces. Restrict it with the
-host firewall if it should only be reachable through the tunnel. For a
-non-published origin, attach both containers to a shared private Docker network
-and remove the host port mapping.
+to restrict access to the dashboard. The published `1337` port is reachable on
+host interfaces. Restrict it with the host firewall if it should only be
+reachable through the tunnel. For a non-published origin, attach both
+containers to a shared private Docker network and remove the host port mapping.
 
 The clock uses each visitor's local time and browser locale. Themes are stored
 per browser, and bangs are stored per browser as well. Your shortcuts do not
@@ -63,8 +62,8 @@ keeps no user database.
 
 The settings screen is available at `/settings`. It includes bang management
 and a name editor. The name defaults to `user`, is saved in browser storage,
-and is inserted into one of the 15 greeting templates in
-`src/data/greetings.json`, selected by the visitor's local time of day.
+and is inserted into one of 15 greeting templates for each time of day in
+`src/data/greetings.json`, selected by the visitor's local time.
 
 ## Structure
 

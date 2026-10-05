@@ -1,8 +1,8 @@
 """
 Browser Dashboard — FastAPI application entry point.
 
-Serves system stats and the built frontend. User bang settings are stored in
-each browser's localStorage, so no database is required.
+Serves the built frontend. User settings are stored in each browser's
+localStorage, so no database is required.
 
 Running (production):
   1. npm run build          (in the project root, once)
@@ -30,8 +30,6 @@ load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 
-from routers import system_router
-
 # Resolve the dist/ directory relative to this file (backend/../dist)
 DIST_DIR = Path(__file__).parent.parent / "dist"
 
@@ -41,10 +39,6 @@ app = FastAPI(
     description="System stats API for the browser dashboard.",
     version="1.0.0",
 )
-
-# ── API routes ──────────────────────────────────────────────────────────────
-app.include_router(system_router)
-
 
 # ── Frontend static file serving ────────────────────────────────────────────
 if DIST_DIR.exists():

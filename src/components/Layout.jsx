@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Calendar from './Calendar';
 import Greeting from './Greeting';
-import PiMonitor from './PiMonitor';
 import { applyThemeSettings, getThemeSettings } from '../services/themeSettings';
 import '../styles/Layout.css';
 
@@ -26,8 +25,6 @@ function Layout() {
           </div>
         </div>
       </main>
-
-      <PiMonitor />
     </div>
   );
 }

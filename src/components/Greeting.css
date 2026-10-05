@@ -11,3 +11,14 @@
 .user-name {
   color: var(--accent-purple);
 }
+
+@media (max-width: 768px) {
+  .greeting-text {
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 0.75rem;
+    font-size: clamp(1.5rem, 6vw, 2.25rem);
+    line-height: 1.25;
+    overflow-wrap: break-word;
+  }
+}

@@ -2,10 +2,10 @@ const THEME_SETTINGS_KEY = 'dashboard-theme-settings';
 const LEGACY_THEME_KEY = 'dashboard-theme';
 
 export const ACCENT_PRESETS = [
-  { name: 'Purple', value: '#b69aff' },
-  { name: 'Orange', value: '#ff9b54' },
-  { name: 'Green', value: '#54d6a0' },
-  { name: 'Blue', value: '#75b8ff' },
+  { name: 'Purple', value: '#b18aff' },
+  { name: 'Orange', value: '#ff9142' },
+  { name: 'Green', value: '#3fd99a' },
+  { name: 'Blue', value: '#62adff' },
 ];
 
 export const DEFAULT_THEME_SETTINGS = {
