@@ -39,19 +39,21 @@ npm run build
 
 ### Docker and Cloudflare Tunnel
 
-The supplied Compose file binds the app to `127.0.0.1:1337` on the host. Run
-`cloudflared` on the same host and point the tunnel origin at
-`http://localhost:1337`. The app does not require a database or persistent
-container volume.
+The supplied Compose file publishes the app on host port `1337`, forwarding to
+container port `8000`. If `cloudflared` runs directly on the Docker host, point
+the tunnel origin at `http://localhost:1337`. If `cloudflared` runs in a
+container, `localhost` refers to that container, not this app: use the Docker
+host's reachable address with port `1337`, or attach both containers to a
+shared Docker network and route to `http://browser-dashboard:8000`. The app
+does not require a database or persistent container volume.
 
 Before publishing a tunnel hostname, configure a Cloudflare Access application
 and an allow policy for the intended users. Protect the whole hostname,
 including `/api/*` if you want to restrict access to the system monitor endpoint.
-Do not change the Compose port binding to a public interface
-unless access is separately restricted at the host firewall or private network.
-If `cloudflared` runs in another container, connect both containers to a private
-Docker network and route to the app service by name instead of exposing its port
-publicly.
+The published `1337` port is reachable on host interfaces. Restrict it with the
+host firewall if it should only be reachable through the tunnel. For a
+non-published origin, attach both containers to a shared private Docker network
+and remove the host port mapping.
 
 The clock uses each visitor's local time and browser locale. Themes are stored
 per browser, and bangs are stored per browser as well. Your shortcuts do not

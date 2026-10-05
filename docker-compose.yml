@@ -8,7 +8,7 @@ services:
     container_name: browser-dashboard
     restart: unless-stopped
     ports:
-      # Keep the origin private; cloudflared on this host can reach localhost.
-      - "127.0.0.1:1337:8000"
+      # Allows a cloudflared container to reach the origin through the Docker host.
+      - "1337:8000"
     environment:
       - PORT=8000
