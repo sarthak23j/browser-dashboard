@@ -136,7 +136,7 @@
 }
 
 .settings-panel--open {
-  max-height: calc(100dvh - 27rem);
+  max-height: calc(100dvh - 34rem);
   overflow-y: auto;
   opacity: 1;
   pointer-events: auto;
@@ -147,7 +147,7 @@
 
 @media (max-width: 768px) {
   .settings-panel--open {
-    max-height: calc(100dvh - 23rem);
+    max-height: calc(100dvh - 24rem);
     padding-bottom: 1rem;
   }
 }

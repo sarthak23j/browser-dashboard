@@ -46,7 +46,7 @@
   align-items: center;
   width: min(1600px, 95%);
   max-height: 100%;
-  margin-top: 6rem;
+  margin-top: 12.5rem;
   flex: 1;
   min-height: 0;
 }
@@ -84,7 +84,7 @@
 
   .center-content-wrapper {
     width: 100%;
-    margin-top: 5rem;
+    margin-top: 11.5rem;
     height: auto;
     flex: 1;
   }
