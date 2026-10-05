@@ -12,3 +12,9 @@ services:
       - "1337:8000"
     environment:
       - PORT=8000
+    networks:
+      - cloudflare-tunnel
+
+networks:
+  cloudflare-tunnel:
+    external: true
