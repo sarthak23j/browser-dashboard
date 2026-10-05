@@ -140,8 +140,8 @@
   overflow-y: auto;
   opacity: 1;
   pointer-events: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-color) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   padding-bottom: 1.5rem;
 }
 
@@ -153,12 +153,9 @@
 }
 
 .settings-panel--open::-webkit-scrollbar {
-  width: 4px;
-}
-
-.settings-panel--open::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: var(--radius-full);
+  display: none;
+  width: 0px;
+  height: 0px;
 }
 
 .settings-panel-inner {
