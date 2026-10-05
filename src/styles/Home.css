@@ -113,10 +113,8 @@
 
 /* ── Inline settings panel ───────────────────────────────────────────────── */
 .settings-panel {
-  /* Break out of the narrow center-content-wrapper and center on viewport */
-  position: relative;
-  left: 50vw;
-  transform: translateX(-50%);
+  /* All flex ancestors are centered at 50vw; overflow:visible lets this
+     wider element spill out symmetrically without any positioning tricks. */
   width: min(800px, 90vw);
   /* Collapsed */
   max-height: 0;
@@ -124,8 +122,7 @@
   opacity: 0;
   transition:
     max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.3s ease,
-    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity 0.3s ease;
   pointer-events: none;
 }
 
@@ -133,8 +130,6 @@
   max-height: 70vh;
   overflow-y: auto;
   opacity: 1;
-  /* Keep the viewport-centering transform alongside the open state */
-  transform: translateX(-50%);
   pointer-events: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--border-color) transparent;
@@ -157,16 +152,10 @@
   width: 100%;
 }
 
-/* On mobile: reset the breakout, just use full width in normal flow */
+/* On mobile: full width, nothing to reset */
 @media (max-width: 600px) {
   .settings-panel {
-    position: static;
-    left: auto;
-    transform: none;
     width: 100%;
-  }
-  .settings-panel--open {
-    transform: none;
   }
 }
 
