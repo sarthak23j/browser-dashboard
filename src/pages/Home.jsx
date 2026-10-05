@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import '../styles/Home.css';
+import '../styles/Bangs.css';
 import { BangsStorage } from '../services/bangsStorage';
 import { getUserName, setUserName } from '../services/userSettings';
 import {
