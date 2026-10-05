@@ -7,7 +7,6 @@
 /* Wrapper that stacks search bar + panel vertically */
 .home-inner {
   width: 100%;
-  max-width: 560px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,6 +15,7 @@
 
 .search-form {
   width: 100%;
+  max-width: 500px;
 }
 
 .search-wrapper {
@@ -113,7 +113,7 @@
 
 /* ── Inline settings panel ───────────────────────────────────────────────── */
 .settings-panel {
-  width: 100%;
+  width: min(800px, 90vw);
   /* Collapsed state: zero height, no overflow */
   max-height: 0;
   overflow: hidden;
@@ -151,8 +151,15 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding: 1.25rem 0.25rem 0.5rem;
+  padding: 1.25rem 0 0.5rem;
   width: 100%;
+}
+
+/* On mobile, match the search form width */
+@media (max-width: 600px) {
+  .settings-panel {
+    width: 100%;
+  }
 }
 
 /* ── Animations ──────────────────────────────────────────────────────────── */
