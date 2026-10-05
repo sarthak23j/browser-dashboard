@@ -4,9 +4,18 @@
   justify-content: center;
 }
 
+/* Wrapper that stacks search bar + panel vertically */
+.home-inner {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
 .search-form {
   width: 100%;
-  max-width: 500px;
 }
 
 .search-wrapper {
@@ -39,6 +48,7 @@
   color: var(--text-muted);
 }
 
+/* ── Gear button ─────────────────────────────────────────────────────────── */
 .settings-btn {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -56,7 +66,8 @@
   padding: 0;
 }
 
-.settings-btn:hover {
+.settings-btn:hover,
+.settings-btn.is-active {
   color: var(--accent-purple);
   border-color: var(--accent-purple);
   background: var(--bg-tertiary);
@@ -69,10 +80,12 @@
   transition: transform 0.6s ease;
 }
 
-.settings-btn:hover .gear-icon {
+.settings-btn:hover .gear-icon,
+.settings-btn.is-active .gear-icon {
   transform: rotate(60deg);
 }
 
+/* ── Bang match pill ─────────────────────────────────────────────────────── */
 .bang-pill {
   display: inline-flex;
   align-items: center;
@@ -98,6 +111,51 @@
   color: var(--text-secondary);
 }
 
+/* ── Inline settings panel ───────────────────────────────────────────────── */
+.settings-panel {
+  width: 100%;
+  /* Collapsed state: zero height, no overflow */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease,
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.settings-panel--open {
+  /* Tall enough to show all content; scrolls internally when needed */
+  max-height: 70vh;
+  overflow-y: auto;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  /* Subtle scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.settings-panel--open::-webkit-scrollbar {
+  width: 4px;
+}
+
+.settings-panel--open::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+}
+
+.settings-panel-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.25rem 0.25rem 0.5rem;
+  width: 100%;
+}
+
+/* ── Animations ──────────────────────────────────────────────────────────── */
 @keyframes slideInDown {
   from {
     opacity: 0;
