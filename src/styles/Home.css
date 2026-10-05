@@ -113,9 +113,7 @@
 
 /* ── Inline settings panel ───────────────────────────────────────────────── */
 .settings-panel {
-  /* All flex ancestors are centered at 50vw; overflow:visible lets this
-     wider element spill out symmetrically without any positioning tricks. */
-  width: min(800px, 90vw);
+  width: 100%;
   /* Collapsed */
   max-height: 0;
   overflow: hidden;
@@ -150,13 +148,6 @@
   gap: 1.5rem;
   padding: 1.25rem 0 0.5rem;
   width: 100%;
-}
-
-/* On mobile: full width, nothing to reset */
-@media (max-width: 600px) {
-  .settings-panel {
-    width: 100%;
-  }
 }
 
 /* ── Animations ──────────────────────────────────────────────────────────── */

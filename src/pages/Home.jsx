@@ -13,7 +13,9 @@ import ColorPicker from '../components/ColorPicker';
 function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [bangs, setBangs] = useState([]);
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(
+    () => typeof window !== 'undefined' && (window.location.search.includes('settings') || window.location.hash.includes('settings'))
+  );
 
   // Settings panel state (lifted from Bangs.jsx)
   const [selectedBang, setSelectedBang] = useState(null);
