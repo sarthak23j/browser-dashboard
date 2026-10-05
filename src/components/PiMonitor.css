@@ -26,8 +26,8 @@
 }
 
 @keyframes pi-fade-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0);   }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* Error state — muted border pulse */
@@ -67,9 +67,6 @@
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .pi-monitor-pill {
-    bottom: 4.5rem; /* sit above the theme dots on mobile */
-    right: 50%;
-    transform: translateX(50%);
-    font-size: 0.68rem;
+    display: none;
   }
 }
