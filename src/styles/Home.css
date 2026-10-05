@@ -113,12 +113,15 @@
 
 /* ── Inline settings panel ───────────────────────────────────────────────── */
 .settings-panel {
+  /* Break out of the narrow center-content-wrapper and center on viewport */
+  position: relative;
+  left: 50vw;
+  transform: translateX(-50%);
   width: min(800px, 90vw);
-  /* Collapsed state: zero height, no overflow */
+  /* Collapsed */
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transform: translateY(-8px);
   transition:
     max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.3s ease,
@@ -127,13 +130,12 @@
 }
 
 .settings-panel--open {
-  /* Tall enough to show all content; scrolls internally when needed */
   max-height: 70vh;
   overflow-y: auto;
   opacity: 1;
-  transform: translateY(0);
+  /* Keep the viewport-centering transform alongside the open state */
+  transform: translateX(-50%);
   pointer-events: auto;
-  /* Subtle scrollbar */
   scrollbar-width: thin;
   scrollbar-color: var(--border-color) transparent;
 }
@@ -155,10 +157,16 @@
   width: 100%;
 }
 
-/* On mobile, match the search form width */
+/* On mobile: reset the breakout, just use full width in normal flow */
 @media (max-width: 600px) {
   .settings-panel {
+    position: static;
+    left: auto;
+    transform: none;
     width: 100%;
+  }
+  .settings-panel--open {
+    transform: none;
   }
 }
 
