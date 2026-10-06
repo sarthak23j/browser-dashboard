@@ -126,10 +126,29 @@
   border: 0;
 }
 
-.theme-setting-group legend {
+.theme-setting-group legend,
+.theme-setting-group .setting-label {
+  display: block;
   margin-bottom: 0.65rem;
   color: var(--text-secondary);
   font-weight: 600;
+}
+
+.theme-setting-group input {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  width: 100%;
+  transition: all 0.25s ease;
+}
+
+.theme-setting-group input:focus {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 2px var(--accent-purple-glow);
 }
 
 .backdrop-options,
