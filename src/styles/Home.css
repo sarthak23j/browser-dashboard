@@ -23,6 +23,11 @@
   padding-bottom: 0.75rem;
 }
 
+/* When a background image is active: transparent sticky bar so greeting is directly over the bg */
+[data-has-bg="true"] .home-sticky-bar {
+  background: transparent;
+}
+
 /* ── Settings action bar (inside sticky, animates in when open) ───────────── */
 .settings-action-bar {
   width: 100%;
@@ -86,10 +91,19 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+[data-has-bg="true"] .search-input {
+  background: color-mix(in srgb, var(--bg-secondary) 80%, transparent);
+  backdrop-filter: blur(8px);
+}
+
 .search-input:focus {
   border-color: var(--accent-purple);
   box-shadow: 0 0 0 3px var(--accent-purple-glow), 0 4px 12px rgba(0, 0, 0, 0.15);
   background: var(--bg-tertiary);
+}
+
+[data-has-bg="true"] .search-input:focus {
+  background: color-mix(in srgb, var(--bg-tertiary) 80%, transparent);
 }
 
 .search-input::placeholder {
@@ -114,12 +128,22 @@
   padding: 0;
 }
 
+[data-has-bg="true"] .settings-btn {
+  background: color-mix(in srgb, var(--bg-secondary) 80%, transparent);
+  backdrop-filter: blur(8px);
+}
+
 .settings-btn:hover,
 .settings-btn.is-active {
   color: var(--accent-purple);
   border-color: var(--accent-purple);
   background: var(--bg-tertiary);
   box-shadow: 0 0 0 3px var(--accent-purple-glow), 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-has-bg="true"] .settings-btn:hover,
+[data-has-bg="true"] .settings-btn.is-active {
+  background: color-mix(in srgb, var(--bg-tertiary) 80%, transparent);
 }
 
 .gear-icon {
