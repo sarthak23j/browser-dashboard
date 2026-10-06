@@ -136,26 +136,17 @@
 }
 
 .settings-panel--open {
-  max-height: calc(100dvh - 34rem);
-  overflow-y: auto;
+  max-height: 9999px;
+  overflow: visible;
   opacity: 1;
   pointer-events: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
   padding-bottom: 1.5rem;
 }
 
 @media (max-width: 768px) {
   .settings-panel--open {
-    max-height: calc(100dvh - 24rem);
     padding-bottom: 1rem;
   }
-}
-
-.settings-panel--open::-webkit-scrollbar {
-  display: none;
-  width: 0px;
-  height: 0px;
 }
 
 .settings-panel-inner {
