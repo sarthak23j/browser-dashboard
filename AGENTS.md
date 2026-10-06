@@ -6,6 +6,10 @@ This document provides guidelines and conventions for AI assistants (Antigravity
 
 ## 1. Git & Workflow Standards
 
+- **Local-Only by Default**:
+  - All changes, branch updates, and commits must remain **strictly local**.
+  - **Never push to remote (`origin`) or merge into `main`** unless the user explicitly requests/instructs to merge or push.
+  - Wait for explicit user confirmation before executing any `git push` or branch merge into `main`.
 - **Branching Workflow**:
   - Do **not** commit directly to `main` for non-trivial changes or multi-step tasks.
   - Create descriptive feature or fix branches:
@@ -13,8 +17,9 @@ This document provides guidelines and conventions for AI assistants (Antigravity
     - `fix/<issue-name>` for bug fixes
     - `style/<description>` for styling and UI adjustments
     - `chore/<task-name>` for maintenance, cleanup, or dependencies
-  - Test and verify changes on the branch first.
-  - Merge into `main` (fast-forward or squash merge), then push and clean up the feature branch when complete.
+    - `docs/<description>` for documentation updates
+  - Test and verify changes locally on the branch first.
+  - Only when explicitly instructed by the user: merge into `main` (fast-forward or squash merge), push to remote, and clean up the feature branch.
 - **Commit Messages**:
   - Follow [Conventional Commits](https://www.conventionalcommits.org/):
     - `feat: ...`, `fix: ...`, `style: ...`, `refactor: ...`, `chore: ...`, `docs: ...`

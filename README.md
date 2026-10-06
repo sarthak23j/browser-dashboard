@@ -35,6 +35,8 @@ To start the development server:
 npm run dev
 ```
 
+> **Note**: All changes and branch commits must remain **strictly local** until explicitly requested to merge into `main` or push to remote. For full conventions, see [AGENTS.md](AGENTS.md).
+
 ### Build
 
 To bundle the application for production:
