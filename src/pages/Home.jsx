@@ -22,8 +22,7 @@ function Home() {
   const [selectedBang, setSelectedBang] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
-  const [isEditingName, setIsEditingName] = useState(false);
-  const [isEditingTheme, setIsEditingTheme] = useState(false);
+  const [isEditingSettings, setIsEditingSettings] = useState(false);
   const [error, setError] = useState(null);
   const [userName, setUserNameValue] = useState('user');
   const [themeSettings, setThemeSettings] = useState(getThemeSettings);
@@ -82,20 +81,36 @@ function Home() {
   const handleCloseModal = () => {
     setSelectedBang(null);
     setIsCreating(false);
-    setIsEditingName(false);
-    setIsEditingTheme(false);
+    setIsEditingSettings(false);
     setIsEditing(false);
     setError(null);
+    const fallback = userName.trim() || 'user';
+    setUserNameValue(fallback);
+    try {
+      setUserName(fallback);
+    } catch {
+      // ignore
+    }
   };
 
-  const handleNameSubmit = (e) => {
-    e.preventDefault();
-    setError(null);
+  const handleNameChange = (e) => {
+    const val = e.target.value;
+    setUserNameValue(val);
     try {
-      setUserNameValue(setUserName(userName));
-      setIsEditingName(false);
+      setUserName(val);
+      setError(null);
     } catch {
       setError('Could not save your name in this browser.');
+    }
+  };
+
+  const handleNameBlur = () => {
+    const fallback = userName.trim() || 'user';
+    setUserNameValue(fallback);
+    try {
+      setUserName(fallback);
+    } catch {
+      // ignore
     }
   };
 
@@ -247,25 +262,12 @@ function Home() {
                   className="export-btn"
                   onClick={() => {
                     setUserNameValue(getUserName());
-                    setError(null);
-                    setIsEditingName(true);
-                  }}
-                  aria-label="Edit your name"
-                  title="Edit name"
-                >
-                  <svg viewBox="0 0 24 24" className="export-icon" fill="currentColor">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                  </svg>
-                </button>
-                <button
-                  className="export-btn"
-                  onClick={() => {
                     setThemeSettings(getThemeSettings());
                     setError(null);
-                    setIsEditingTheme(true);
+                    setIsEditingSettings(true);
                   }}
-                  aria-label="Customize theme"
-                  title="Customize theme"
+                  aria-label="Customize settings"
+                  title="Customize settings"
                 >
                   <svg viewBox="0 0 24 24" className="export-icon" fill="currentColor">
                     <path d="M19.14 12.94c.04-.3.06-.61.07-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.61l-1.92-3.32a.5.5 0 0 0-.59-.22l-2.39.96a7.2 7.2 0 0 0-1.62-.94l-.36-2.54a.5.5 0 0 0-.48-.41h-3.84a.5.5 0 0 0-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.5.5 0 0 0-.59.22L2.74 8.87a.5.5 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.5.5 0 0 0-.12.61l1.92 3.32a.5.5 0 0 0 .59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54a.5.5 0 0 0 .48.41h3.84a.5.5 0 0 0 .47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96a.5.5 0 0 0 .59-.22l1.92-3.32a.5.5 0 0 0-.12-.61zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2z" />
@@ -321,46 +323,37 @@ function Home() {
       )}
 
       {/* ── Modals (rendered at top level so they're full-screen) ── */}
-      {isEditingName && (
-        <div className="modal-backdrop" onClick={handleCloseModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close-btn" onClick={handleCloseModal} aria-label="Close name editor">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-              </svg>
-            </button>
-            {error && <p className="modal-error" role="alert">{error}</p>}
-            <form onSubmit={handleNameSubmit} className="bang-form">
-              <h3>Edit your name</h3>
-              <div className="form-group">
-                <label htmlFor="user-name">Name</label>
-                <input
-                  id="user-name"
-                  type="text"
-                  value={userName}
-                  onChange={(e) => setUserNameValue(e.target.value)}
-                  maxLength={40}
-                  autoFocus
-                  required
-                />
-              </div>
-              <button type="submit" className="submit-btn">Save name</button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {isEditingTheme && (
+      {isEditingSettings && (
         <div className="modal-backdrop" onClick={handleCloseModal}>
           <div className="modal-content theme-settings-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close-btn" onClick={handleCloseModal} aria-label="Close theme settings">
+            <button className="modal-close-btn" onClick={handleCloseModal} aria-label="Close settings">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
               </svg>
             </button>
-            <h3>Customize theme</h3>
+            <h3>Settings</h3>
             <p className="theme-settings-hint">Changes are saved on this device as you make them.</p>
             {error && <p className="modal-error" role="alert">{error}</p>}
+
+            <div className="theme-setting-group">
+              <label htmlFor="user-name" className="setting-label">Name</label>
+              <input
+                id="user-name"
+                type="text"
+                value={userName}
+                onChange={handleNameChange}
+                onBlur={handleNameBlur}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    e.target.blur();
+                  }
+                }}
+                placeholder="user"
+                maxLength={40}
+              />
+            </div>
+
             <fieldset className="theme-setting-group">
               <legend>Backdrop</legend>
               <div className="backdrop-options">
