@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/Home.css';
 import '../styles/Bangs.css';
 import { BangsStorage } from '../services/bangsStorage';
@@ -9,6 +9,7 @@ import {
   saveThemeSettings,
 } from '../services/themeSettings';
 import ColorPicker from '../components/ColorPicker';
+import Greeting from '../components/Greeting';
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,8 +33,6 @@ function Home() {
     searchurl: '',
     baseurl: '',
   });
-
-  const panelRef = useRef(null);
 
   useEffect(() => {
     setBangs(BangsStorage.getBangs());
@@ -201,8 +200,12 @@ function Home() {
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="home-container">
-      <div className="home-inner">
+    <div className="home-page">
+
+      {/* ── Sticky bar: greeting + search bar + settings action row ── */}
+      <div className="home-sticky-bar">
+        <Greeting />
+
         {/* Search bar row */}
         <form onSubmit={handleSearchSubmit} className="search-form">
           <div className="search-wrapper">
@@ -234,14 +237,9 @@ function Home() {
           )}
         </form>
 
-        {/* Inline settings panel */}
-        <div
-          ref={panelRef}
-          className={`settings-panel${settingsOpen ? ' settings-panel--open' : ''}`}
-          aria-hidden={!settingsOpen}
-        >
-          <div className="settings-panel-inner">
-            {/* Panel header */}
+        {/* Settings action bar — sticks with the sticky bar when settings open */}
+        {settingsOpen && (
+          <div className="settings-action-bar">
             <div className="bangs-header">
               <h2 className="bangs-title">Settings</h2>
               <div className="bangs-header-actions">
@@ -303,21 +301,26 @@ function Home() {
                 </button>
               </div>
             </div>
-
-            <h3 className="settings-section-title">Search shortcuts</h3>
-            <div className="bangs-grid">
-              {bangs.map((bang) => (
-                <div key={bang.alias} className="bang-card" onClick={() => handleCardClick(bang)}>
-                  <p className="bang-card-name">{bang.name}</p>
-                  <p className="bang-card-alias">{bang.alias}</p>
-                </div>
-              ))}
-            </div>
           </div>
-        </div>
+        )}
       </div>
 
-      {/* ── Modals (rendered outside the panel so they stay full-screen) ── */}
+      {/* ── Cards section: scrolls beneath the sticky bar ── */}
+      {settingsOpen && (
+        <div className="settings-cards-section">
+          <h3 className="settings-section-title">Search shortcuts</h3>
+          <div className="bangs-grid">
+            {bangs.map((bang) => (
+              <div key={bang.alias} className="bang-card" onClick={() => handleCardClick(bang)}>
+                <p className="bang-card-name">{bang.name}</p>
+                <p className="bang-card-alias">{bang.alias}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Modals (rendered at top level so they're full-screen) ── */}
       {isEditingName && (
         <div className="modal-backdrop" onClick={handleCloseModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
