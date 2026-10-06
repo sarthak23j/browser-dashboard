@@ -34,7 +34,7 @@ export const DEFAULT_BANGS = [
   {
     name: 'FitGirl',
     alias: 'fg',
-    searchurl: 'https://fitgirl-repacks.site/?s=s',
+    searchurl: 'https://fitgirl-repacks.site/?s=',
     baseurl: 'https://fitgirl-repacks.site',
   },
   {
@@ -58,7 +58,7 @@ export const DEFAULT_BANGS = [
   {
     name: 'Twitch',
     alias: 't',
-    searchurl: 'https://www.twitch.tv/search?term=s',
+    searchurl: 'https://www.twitch.tv/search?term=',
     baseurl: 'https://www.twitch.tv',
   },
   {

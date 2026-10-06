@@ -68,8 +68,7 @@ they do not replace existing shortcuts.
 
 ## Structure
 
-- `src/pages/Home.jsx`: Main search landing page with search redirection logic.
-- `src/pages/Bangs.jsx`: Settings interface for bang actions, import/export, the greeting name, and theme customization.
+- `src/pages/Home.jsx`: Main search landing page with search redirection logic, inline settings panel, import/export, and theme customization.
 - `src/services/bangsStorage.js`: Default search presets and browser-local storage.
 - `src/services/userSettings.js`: Browser-local greeting name.
 - `src/services/themeSettings.js`: Backdrop and accent settings.
