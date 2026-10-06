@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import '../styles/Home.css';
 import '../styles/Bangs.css';
 import { BangsStorage } from '../services/bangsStorage';
@@ -7,7 +7,13 @@ import {
   ACCENT_PRESETS,
   getThemeSettings,
   saveThemeSettings,
+  normalizeBgOpacity,
 } from '../services/themeSettings';
+import {
+  getBgImage,
+  setBgImage,
+  clearBgImage,
+} from '../services/bgImageStorage';
 import ColorPicker from '../components/ColorPicker';
 import Greeting from '../components/Greeting';
 
@@ -26,6 +32,8 @@ function Home() {
   const [error, setError] = useState(null);
   const [userName, setUserNameValue] = useState('user');
   const [themeSettings, setThemeSettings] = useState(getThemeSettings);
+  const [bgImage, setBgImageState] = useState(null); // base64 data URL or null
+  const bgImageInputRef = useRef(null);
   const [formData, setFormData] = useState({
     name: '',
     alias: '',
@@ -36,6 +44,7 @@ function Home() {
   useEffect(() => {
     setBangs(BangsStorage.getBangs());
     setUserNameValue(getUserName());
+    setBgImageState(getBgImage());
   }, []);
 
   // ── Search logic ──────────────────────────────────────────────────────────
@@ -112,6 +121,43 @@ function Home() {
     } catch {
       // ignore
     }
+  };
+
+  // ── Background image helpers ───────────────────────────────────────────────
+  const handleBgImageFile = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    // Reset input so the same file can be re-selected after clearing
+    e.target.value = '';
+
+    if (!file.type.startsWith('image/')) {
+      setError('Please select an image file.');
+      return;
+    }
+    // Warn if the file is very large (>4 MB) — localStorage is typically capped at ~5 MB
+    if (file.size > 4 * 1024 * 1024) {
+      setError('Image is too large (max ~4 MB). Try a smaller or more compressed image.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target.result;
+      try {
+        setBgImage(dataUrl);
+        setBgImageState(dataUrl);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleClearBgImage = () => {
+    clearBgImage();
+    setBgImageState(null);
+    setError(null);
   };
 
   const updateThemeSettings = (updates) => {
@@ -353,6 +399,70 @@ function Home() {
                 maxLength={40}
               />
             </div>
+
+            <fieldset className="theme-setting-group">
+              <legend>Background image</legend>
+              {/* Hidden file input */}
+              <input
+                ref={bgImageInputRef}
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={handleBgImageFile}
+              />
+              {bgImage ? (
+                <div className="bg-image-preview-row">
+                  <div
+                    className="bg-image-thumb"
+                    style={{ backgroundImage: `url("${bgImage}")` }}
+                    aria-label="Current background image preview"
+                  />
+                  <div className="bg-image-actions">
+                    <button
+                      type="button"
+                      className="bg-image-btn"
+                      onClick={() => bgImageInputRef.current?.click()}
+                    >
+                      Change
+                    </button>
+                    <button
+                      type="button"
+                      className="bg-image-btn bg-image-btn--remove"
+                      onClick={handleClearBgImage}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  className="bg-image-upload-btn"
+                  onClick={() => bgImageInputRef.current?.click()}
+                >
+                  <svg viewBox="0 0 24 24" className="bg-image-upload-icon" fill="currentColor">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 7h14v2H5v-2z" transform="scale(1,-1) translate(0,-24)" />
+                  </svg>
+                  Upload image
+                </button>
+              )}
+              {bgImage && (
+                <label className="bg-opacity-label">
+                  <span className="setting-label" style={{ marginBottom: 0 }}>
+                    Opacity — {normalizeBgOpacity(themeSettings.bgOpacity)}%
+                  </span>
+                  <input
+                    type="range"
+                    className="bg-opacity-slider"
+                    min="5"
+                    max="60"
+                    step="5"
+                    value={normalizeBgOpacity(themeSettings.bgOpacity)}
+                    onChange={(e) => updateThemeSettings({ bgOpacity: Number(e.target.value) })}
+                  />
+                </label>
+              )}
+            </fieldset>
 
             <fieldset className="theme-setting-group">
               <legend>Backdrop</legend>

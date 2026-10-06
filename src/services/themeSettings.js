@@ -11,13 +11,14 @@ export const ACCENT_PRESETS = [
 export const DEFAULT_THEME_SETTINGS = {
   backdrop: 'dark',
   accent: ACCENT_PRESETS[0].value,
+  bgOpacity: 20,
 };
 
 const LEGACY_THEME_SETTINGS = {
-  'theme-1': { backdrop: 'dark', accent: '#b69aff' },
-  'theme-2': { backdrop: 'dark', accent: '#ff9b54' },
-  'theme-3': { backdrop: 'light', accent: '#08784e' },
-  'theme-4': { backdrop: 'light', accent: '#245fa8' },
+  'theme-1': { backdrop: 'dark', accent: '#b69aff', bgOpacity: 20 },
+  'theme-2': { backdrop: 'dark', accent: '#ff9b54', bgOpacity: 20 },
+  'theme-3': { backdrop: 'light', accent: '#08784e', bgOpacity: 20 },
+  'theme-4': { backdrop: 'light', accent: '#245fa8', bgOpacity: 20 },
 };
 
 function isValidThemeSettings(value) {
@@ -29,12 +30,22 @@ function isValidThemeSettings(value) {
   );
 }
 
+/** Returns bgOpacity clamped to [5, 60], defaulting to 20. */
+export function normalizeBgOpacity(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return 20;
+  return Math.min(60, Math.max(5, n));
+}
+
 export function getThemeSettings() {
   try {
     const saved = localStorage.getItem(THEME_SETTINGS_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (isValidThemeSettings(parsed)) return parsed;
+      if (isValidThemeSettings(parsed)) {
+        // Ensure bgOpacity is always present even in older saves
+        return { bgOpacity: 20, ...parsed };
+      }
     }
 
     const legacyTheme = localStorage.getItem(LEGACY_THEME_KEY);
@@ -52,6 +63,7 @@ export function applyThemeSettings(settings) {
   const root = document.documentElement;
   root.dataset.backdrop = settings.backdrop;
   root.style.setProperty('--user-accent', settings.accent);
+  root.style.setProperty('--bg-image-opacity', normalizeBgOpacity(settings.bgOpacity) / 100);
 }
 
 export function saveThemeSettings(settings) {

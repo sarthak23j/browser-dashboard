@@ -69,6 +69,28 @@ body {
   overflow-x: clip;
 }
 
+/* Fixed background image layer — sits behind everything, never scrolls */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--bg-image-url, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: var(--bg-image-opacity, 0.2);
+  pointer-events: none;
+  /* Hidden when no image is set */
+  display: var(--bg-image-display, none);
+}
+
+/* Ensure layout stacks above the bg layer */
+#root {
+  position: relative;
+  z-index: 1;
+}
+
 /* Typography Defaults */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;

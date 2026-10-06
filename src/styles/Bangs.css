@@ -159,6 +159,110 @@
   gap: 0.65rem;
 }
 
+/* ── Background image UI ──────────────────────────────────────────────────── */
+.bg-image-upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: var(--bg-tertiary);
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  width: 100%;
+  justify-content: center;
+}
+
+.bg-image-upload-btn:hover {
+  border-color: var(--accent-purple);
+  color: var(--text-primary);
+  background: var(--accent-purple-muted);
+}
+
+.bg-image-upload-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+}
+
+.bg-image-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bg-image-thumb {
+  width: 4.5rem;
+  height: 3rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.bg-image-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.bg-image-btn {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.bg-image-btn:hover {
+  border-color: var(--accent-purple);
+  color: var(--text-primary);
+}
+
+.bg-image-btn--remove {
+  color: rgb(239, 68, 68);
+  border-color: rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.06);
+}
+
+.bg-image-btn--remove:hover {
+  background: rgb(239, 68, 68);
+  color: #fff;
+  border-color: rgb(239, 68, 68);
+}
+
+.bg-opacity-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.bg-opacity-slider {
+  width: 100%;
+  accent-color: var(--accent-purple);
+  cursor: pointer;
+  height: 4px;
+  border-radius: 9999px;
+  /* Override the global input styles */
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.bg-opacity-slider:focus {
+  box-shadow: none;
+  border: none;
+}
+
 .backdrop-option {
   display: flex;
   align-items: center;
