@@ -1,8 +1,8 @@
 .layout-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100%;
+  flex: 1;
   width: 100%;
   padding: 1.5rem 2rem;
 }
@@ -39,8 +39,7 @@
 @media (max-width: 768px) {
   .layout-container {
     padding: 1rem;
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 100%;
   }
 
   .layout-header {
