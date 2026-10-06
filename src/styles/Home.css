@@ -19,6 +19,7 @@
   align-items: center;
   /* Initial vertical position — mirrors the old center-content-wrapper margin */
   margin-top: 12.5rem;
+  padding-top: 0.5rem;
   padding-bottom: 0.75rem;
 }
 
