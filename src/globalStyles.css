@@ -75,7 +75,11 @@ body {
 body::before {
   content: '';
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100lvh;
   z-index: 0;
   background-image: var(--bg-image-url, none);
   background-size: cover;
@@ -85,6 +89,8 @@ body::before {
   pointer-events: none;
   /* Hidden when no image is set */
   display: var(--bg-image-display, none);
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Ensure layout stacks above the bg layer */
