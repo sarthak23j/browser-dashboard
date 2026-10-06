@@ -39,9 +39,11 @@ export function applyBgImage(dataUrl) {
   if (dataUrl) {
     root.style.setProperty('--bg-image-url', `url("${dataUrl}")`);
     root.style.setProperty('--bg-image-display', 'block');
+    root.dataset.hasBg = 'true';
   } else {
     root.style.removeProperty('--bg-image-url');
     root.style.setProperty('--bg-image-display', 'none');
+    delete root.dataset.hasBg;
   }
 }
 
