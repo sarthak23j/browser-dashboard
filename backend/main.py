@@ -50,6 +50,10 @@ if _index_path.exists():
     # an unchanged build (304 Not Modified), and lets Cloudflare revalidate
     # its cache efficiently.
     _INDEX_ETAG = f'"{hashlib.md5(_INDEX_HTML).hexdigest()}"'  # noqa: S324
+    print(
+        f"[INFO] Loaded index.html into memory "
+        f"({len(_INDEX_HTML) / 1024:.1f} KB, ETag: {_INDEX_ETAG})"
+    )
 
 
 app = FastAPI(

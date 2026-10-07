@@ -11,7 +11,8 @@ RUN npm ci
 # Copy only the files needed for building the frontend
 COPY vite.config.js index.html ./
 COPY src/ ./src
-COPY public/ ./public
+# public/ is optional — only copy if it exists (avoids hard failure when absent)
+COPY public* ./public/
 
 # Build the production bundle (generates dist/)
 RUN npm run build
@@ -19,7 +20,7 @@ RUN npm run build
 # ==========================================
 # Stage 2: Create the runtime Python environment
 # ==========================================
-FROM python:3.11-slim AS runtime
+FROM python:3.12-slim AS runtime
 WORKDIR /app
 
 # Copy python dependencies and install them
