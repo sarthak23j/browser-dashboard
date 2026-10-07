@@ -47,6 +47,17 @@ function Home() {
     setBgImageState(getBgImage());
   }, []);
 
+  // ── Close any open modal on Escape ────────────────────────────────────────
+  useEffect(() => {
+    const isModalOpen = isEditingSettings || selectedBang !== null || isCreating;
+    if (!isModalOpen) return;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') handleCloseModal();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [isEditingSettings, selectedBang, isCreating]);
+
   // ── Search logic ──────────────────────────────────────────────────────────
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -59,7 +70,10 @@ function Home() {
     const matchedBang = bangs.find((b) => b.alias.toLowerCase() === command);
 
     if (matchedBang) {
-      if (rest) {
+      // If searchurl and baseurl are identical the site has no URL-based search
+      // (e.g. ChatGPT, Claude). Always go to the homepage regardless of any
+      // trailing query text — appending it would produce a 404.
+      if (rest && matchedBang.searchurl !== matchedBang.baseurl) {
         window.location.href = matchedBang.searchurl + encodeURIComponent(rest);
       } else {
         window.location.href = matchedBang.baseurl;

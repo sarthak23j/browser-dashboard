@@ -15,17 +15,6 @@
   padding-bottom: 1rem;
 }
 
-.logo-section h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-.logo-accent {
-  color: var(--accent-purple);
-  text-shadow: 0 0 15px var(--accent-purple-glow);
-}
-
 .layout-main {
   flex: 1;
   display: flex;

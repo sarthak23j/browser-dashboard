@@ -92,7 +92,7 @@
 }
 
 .export-btn:hover {
-  background: var(--surface-hover, rgba(255,255,255,0.08));
+  background: var(--bg-tertiary);
   color: var(--text-primary);
   transform: translateY(-1px);
 }

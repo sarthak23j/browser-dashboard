@@ -8,8 +8,12 @@ import { useEffect } from 'react';
 
 function Layout() {
   useEffect(() => {
-    applyThemeSettings(getThemeSettings());
-    applyStoredBgImage();
+    try {
+      applyThemeSettings(getThemeSettings());
+      applyStoredBgImage();
+    } catch {
+      // localStorage corrupted or unavailable — CSS variable defaults remain active
+    }
   }, []);
 
   return (

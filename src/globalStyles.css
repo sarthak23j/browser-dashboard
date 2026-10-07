@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+/* Self-hosted via @fontsource — no network request, fully inlined by vite-plugin-singlefile.
+   Only weights actually used in the codebase are imported (300 is unused, omitted). */
+@import '@fontsource/outfit/400.css';
+@import '@fontsource/outfit/500.css';
+@import '@fontsource/outfit/600.css';
+@import '@fontsource/outfit/700.css';
 
 /* Design Tokens & CSS Variables */
 :root {
