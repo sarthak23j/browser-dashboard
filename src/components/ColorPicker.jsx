@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import './ColorPicker.css';
+import { useEffect, useRef, useState } from "react";
+import "./ColorPicker.css";
 
 function hexToHsv(hex) {
   const red = Number.parseInt(hex.slice(1, 3), 16) / 255;
@@ -30,24 +30,31 @@ function hsvToHex({ hue, saturation, value }) {
   const section = hue / 60;
   const secondary = chroma * (1 - Math.abs((section % 2) - 1));
   const match = value / 100 - chroma;
-  const channels = section < 1
-    ? [chroma, secondary, 0]
-    : section < 2
-      ? [secondary, chroma, 0]
-      : section < 3
-        ? [0, chroma, secondary]
-        : section < 4
-          ? [0, secondary, chroma]
-          : section < 5
-            ? [secondary, 0, chroma]
-            : [chroma, 0, secondary];
+  const channels =
+    section < 1
+      ? [chroma, secondary, 0]
+      : section < 2
+        ? [secondary, chroma, 0]
+        : section < 3
+          ? [0, chroma, secondary]
+          : section < 4
+            ? [0, secondary, chroma]
+            : section < 5
+              ? [secondary, 0, chroma]
+              : [chroma, 0, secondary];
   const hex = channels
-    .map((channel) => Math.round((channel + match) * 255).toString(16).padStart(2, '0'))
-    .join('');
+    .map((channel) =>
+      Math.round((channel + match) * 255)
+        .toString(16)
+        .padStart(2, "0"),
+    )
+    .join("");
   return `#${hex}`;
 }
-
 function ColorPicker({ value, onChange }) {
+  return <p>hello world</p>;
+}
+function ColorPicker2({ value, onChange }) {
   const [color, setColor] = useState(() => hexToHsv(value));
   const [isOpen, setIsOpen] = useState(false);
   const pickerRef = useRef(null);
@@ -63,13 +70,13 @@ function ColorPicker({ value, onChange }) {
       if (!pickerRef.current?.contains(event.target)) setIsOpen(false);
     };
     const closeOnEscape = (event) => {
-      if (event.key === 'Escape') setIsOpen(false);
+      if (event.key === "Escape") setIsOpen(false);
     };
-    document.addEventListener('pointerdown', closeOnOutsideClick);
-    document.addEventListener('keydown', closeOnEscape);
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+    document.addEventListener("keydown", closeOnEscape);
     return () => {
-      document.removeEventListener('pointerdown', closeOnOutsideClick);
-      document.removeEventListener('keydown', closeOnEscape);
+      document.removeEventListener("pointerdown", closeOnOutsideClick);
+      document.removeEventListener("keydown", closeOnEscape);
     };
   }, [isOpen]);
 
@@ -109,7 +116,7 @@ function ColorPicker({ value, onChange }) {
       <button
         type="button"
         className="custom-accent-control"
-        style={{ '--custom-accent': value }}
+        style={{ "--custom-accent": value }}
         aria-expanded={isOpen}
         aria-controls="accent-color-picker"
         aria-label={`Choose custom accent color, current ${value.toUpperCase()}`}
@@ -144,7 +151,7 @@ function ColorPicker({ value, onChange }) {
               aria-valuemax={100}
               aria-valuenow={Math.round(color.saturation)}
               aria-valuetext={`${Math.round(color.saturation)}% saturation, ${Math.round(color.value)}% brightness`}
-              style={{ '--picker-hue': `hsl(${color.hue} 100% 50%)` }}
+              style={{ "--picker-hue": `hsl(${color.hue} 100% 50%)` }}
               onPointerDown={(event) => {
                 event.currentTarget.setPointerCapture(event.pointerId);
                 setFromPointer(event);
@@ -172,10 +179,14 @@ function ColorPicker({ value, onChange }) {
                 max="359"
                 value={Math.round(color.hue)}
                 aria-label="Accent hue"
-                onChange={(event) => updateColor({ ...color, hue: Number(event.target.value) })}
+                onChange={(event) =>
+                  updateColor({ ...color, hue: Number(event.target.value) })
+                }
               />
             </label>
-            <output className="color-picker-value">{hsvToHex(color).toUpperCase()}</output>
+            <output className="color-picker-value">
+              {hsvToHex(color).toUpperCase()}
+            </output>
           </div>
         </div>
       )}

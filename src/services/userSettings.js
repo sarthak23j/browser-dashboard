@@ -10,7 +10,7 @@ export function getUserName() {
 }
 
 export function setUserName(name) {
-  const normalizedName = name.trim() || "buddy";
+  const normalizedName = name.trim() || "user";
   localStorage.setItem(USER_NAME_KEY, normalizedName);
   window.dispatchEvent(new Event(USER_NAME_CHANGE_EVENT));
   return normalizedName;
