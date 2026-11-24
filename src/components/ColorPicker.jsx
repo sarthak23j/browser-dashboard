@@ -51,10 +51,8 @@ function hsvToHex({ hue, saturation, value }) {
     .join("");
   return `#${hex}`;
 }
+
 function ColorPicker({ value, onChange }) {
-  return <p>hello world</p>;
-}
-function ColorPicker2({ value, onChange }) {
   const [color, setColor] = useState(() => hexToHsv(value));
   const [isOpen, setIsOpen] = useState(false);
   const pickerRef = useRef(null);
