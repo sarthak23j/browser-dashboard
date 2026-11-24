@@ -9,10 +9,10 @@ services:
       # Allows a cloudflared container to reach the origin through the Docker host.
       - "1337:8000"
     environment:
-      - PORT=8000
-    network:
+      PORT: 8000
+    networks:
       - home-server
 
 networks:
-  cloudflare-tunnel:
+  home-server:
     external: true
