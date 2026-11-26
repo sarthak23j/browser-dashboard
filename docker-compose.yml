@@ -5,14 +5,11 @@ services:
       dockerfile: Dockerfile
     container_name: browser-dashboard
     restart: unless-stopped
-    ports:
-      # Allows a cloudflared container to reach the origin through the Docker host.
-      - "1337:8000"
     environment:
       PORT: 8000
     networks:
-      - home-server
+      - home-network
 
 networks:
-  home-server:
+  home-network:
     external: true
